@@ -11,8 +11,18 @@
     },
     "devDependencies": {
         "axios": "^0.21",
+        "bootstrap": "^4.6.1",
+        "bootstrap-vue": "^2.22.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.51.0",
+        "sass-loader": "^12.1.0",
+        "vee-validate": "^3.4.14",
+        "vue": "^2.6.14",
+        "vue-loader": "^15.9.8",
+        "vue-router": "^3.5.3",
+        "vue-template-compiler": "^2.6.14"
     }
 }
