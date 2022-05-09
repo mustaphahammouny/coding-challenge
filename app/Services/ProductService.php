@@ -33,4 +33,10 @@ class ProductService
         }
         return new ProductResource($product);
     }
+
+    public function destroy($id): ProductResource
+    {
+        $category = $this->productRepository->delete($id);
+        return new ProductResource($category);
+    }
 }
