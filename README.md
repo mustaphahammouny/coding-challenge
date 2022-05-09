@@ -34,16 +34,24 @@
   `php artisan migrate --seed`
 
 
+* Run the storage link command :<br/>
+  `php artisan storage:link`
+
+
+* Run npm to generate css & js files :<br/>
+  `npm run dev`
+
+
 * Start the project :<br/>
   `php artisan serve`
 
 
 * CLI :<br/>
-  Category creation command:
-  `php artisan category:create`
-  Category deletion command:
-  `php artisan category:delete`
-  Product creation command:
-  `php artisan product:create`
-  Product deletion command:
+  Category creation command:<br/>
+  `php artisan category:create`<br/>
+  Category deletion command:<br/>
+  `php artisan category:delete`<br/>
+  Product creation command:<br/>
+  `php artisan product:create`<br/>
+  Product deletion command:<br/>
   `php artisan product:delete`
