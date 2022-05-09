@@ -3,6 +3,12 @@ const getCategories = async () => {
     return response.data;
 };
 
+const createCategory = async (data) => {
+    let response = await axios.post('/api/categories', data);
+    return response.data;
+};
+
 export {
     getCategories,
+    createCategory,
 }
