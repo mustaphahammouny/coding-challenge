@@ -94,6 +94,6 @@ class CreateProduct extends Command
             $this->productRepository->attach($product->categories(), $ids);
         }
 
-        $this->info('Category created successfully');
+        $this->info('Product created successfully');
     }
 }
