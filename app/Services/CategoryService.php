@@ -23,7 +23,7 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function all(): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         $categories = $this->categoryRepository->all();
         return CategoryResource::collection($categories);

@@ -32,7 +32,7 @@ class CategoryController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return $this->categoryService->all();
+        return $this->categoryService->index();
     }
 
     /**

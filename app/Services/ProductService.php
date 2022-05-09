@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\ProductResource;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductService
 {
@@ -20,6 +21,12 @@ class ProductService
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
+    }
+
+    public function index(Request $request): AnonymousResourceCollection
+    {
+        $products = $this->productRepository->paginate($request->all());
+        return ProductResource::collection($products);
     }
 
     public function store(Request $request): ProductResource
