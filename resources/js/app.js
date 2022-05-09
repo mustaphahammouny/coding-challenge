@@ -2,14 +2,16 @@
 
 import axios from "axios";
 import Vue from "vue";
+import VueRouter from "vue-router";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import ProductIndex from "./components/ProductIndex";
+import router from "./router/index";
 
 window.axios = axios;
 
+Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
-Vue.component('product-index', ProductIndex);
-
-const app = new Vue().$mount('#app');
+const app = new Vue({
+    router,
+}).$mount('#app');

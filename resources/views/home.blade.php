@@ -1,5 +1,5 @@
 @extends('layouts.master')
 
 @section('content')
-    <product-index></product-index>
+    <router-view></router-view>
 @endsection
