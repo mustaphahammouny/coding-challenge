@@ -24,4 +24,11 @@ class BaseRepository
     {
         return $this->model::create($data);
     }
+
+    public function delete($id)
+    {
+        $row = $this->model::findOrFail($id);
+        $row->delete();
+        return $row;
+    }
 }

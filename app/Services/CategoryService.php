@@ -28,4 +28,10 @@ class CategoryService
         $category = $this->categoryRepository->create($data);
         return new CategoryResource($category);
     }
+
+    public function destroy($id): CategoryResource
+    {
+        $category = $this->categoryRepository->delete($id);
+        return new CategoryResource($category);
+    }
 }
