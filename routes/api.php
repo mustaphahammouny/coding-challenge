@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('categories', CategoryController::class)->only(['store', 'destroy']);
+Route::apiResource('categories', CategoryController::class)->only(['index', 'store', 'destroy']);
 Route::apiResource('products', ProductController::class)->only(['store', 'destroy']);

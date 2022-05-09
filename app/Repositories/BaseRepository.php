@@ -20,6 +20,11 @@ class BaseRepository
         $this->model = $model;
     }
 
+    public function all()
+    {
+        return $this->model::all();
+    }
+
     public function create($data)
     {
         return $this->model::create($data);

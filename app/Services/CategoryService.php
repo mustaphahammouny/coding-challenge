@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\CategoryResource;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
 {
@@ -20,6 +21,12 @@ class CategoryService
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
+    }
+
+    public function all(): AnonymousResourceCollection
+    {
+        $categories = $this->categoryRepository->all();
+        return CategoryResource::collection($categories);
     }
 
     public function store(Request $request): CategoryResource
