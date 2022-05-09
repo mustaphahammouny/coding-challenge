@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -51,9 +49,9 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return CategoryResource|JsonResponse
+     * @return CategoryResource
      */
-    public function destroy(int $id)
+    public function destroy(int $id): CategoryResource
     {
         return $this->categoryService->destroy($id);
     }

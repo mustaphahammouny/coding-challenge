@@ -25,6 +25,11 @@ class BaseRepository
         return $this->model::create($data);
     }
 
+    public function attach($relation, $data)
+    {
+        $relation->attach($data);
+    }
+
     public function delete($id)
     {
         $row = $this->model::findOrFail($id);
