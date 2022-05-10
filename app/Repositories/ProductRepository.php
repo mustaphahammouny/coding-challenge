@@ -6,9 +6,14 @@ use App\Models\Product;
 
 class ProductRepository extends BaseRepository
 {
-    public function __construct(Product $product)
+    /**
+     * Specify model class name.
+     *
+     * @return string
+     */
+    public function model()
     {
-        parent::__construct($product);
+        return Product::class;
     }
 
     public function paginate($data)

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class BaseRepository
 {
@@ -13,11 +14,10 @@ class BaseRepository
 
     /**
      * BaseRepository constructor.
-     * @param Model $model
      */
-    public function __construct(Model $model)
+    public function __construct()
     {
-        $this->model = $model;
+        $this->model = App::make($this->model());
     }
 
     public function all()
