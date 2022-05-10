@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Resources\CategoryResource;
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
@@ -29,9 +28,8 @@ class CategoryService
         return CategoryResource::collection($categories);
     }
 
-    public function store(Request $request): CategoryResource
+    public function store(array $data): CategoryResource
     {
-        $data = $request->only(['name', 'parent_category']);
         $category = $this->categoryRepository->create($data);
         return new CategoryResource($category);
     }

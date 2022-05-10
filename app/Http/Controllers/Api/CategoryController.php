@@ -43,7 +43,8 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request): CategoryResource
     {
-        return $this->categoryService->store($request);
+        $data = $request->only(['name', 'parent_category']);
+        return $this->categoryService->store($data);
     }
 
     /**

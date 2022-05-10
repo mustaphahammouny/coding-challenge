@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Http\Resources\ProductResource;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class ProductService
 {
@@ -23,18 +23,17 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(array $data): AnonymousResourceCollection
     {
-        $products = $this->productRepository->paginate($request->all());
+        $products = $this->productRepository->paginate($data);
         return ProductResource::collection($products);
     }
 
-    public function store(Request $request): ProductResource
+    public function store(array $data): ProductResource
     {
-        $data = $request->only(['name', 'description', 'price']);
-        $data['image'] = $request->file('image')->store('products', 'public');
+        $data['image'] = Storage::disk('public')->putFile('products', $data['image']);
         $product = $this->productRepository->create($data);
-        $categories = $request->has('categories') ? $request->input('categories') : [];
+        $categories = $data['categories'] ?? [];
         if (count($categories) > 0) {
             $this->productRepository->attach($product->categories(), $categories);
         }
