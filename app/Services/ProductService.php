@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ProductResource;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService
@@ -23,13 +21,12 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function index(array $data): AnonymousResourceCollection
+    public function index(array $data)
     {
-        $products = $this->productRepository->paginate($data);
-        return ProductResource::collection($products);
+        return $this->productRepository->paginate($data);
     }
 
-    public function store(array $data): ProductResource
+    public function store(array $data)
     {
         $data['image'] = Storage::disk('public')->putFile('products', $data['image']);
         $product = $this->productRepository->create($data);
@@ -37,12 +34,11 @@ class ProductService
         if (count($categories) > 0) {
             $this->productRepository->attach($product->categories(), $categories);
         }
-        return new ProductResource($product);
+        return $product;
     }
 
-    public function destroy($id): ProductResource
+    public function destroy($id)
     {
-        $category = $this->productRepository->delete($id);
-        return new ProductResource($category);
+        return $this->productRepository->delete($id);
     }
 }

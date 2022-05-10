@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Resources\CategoryResource;
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
 {
@@ -22,21 +20,18 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
-        $categories = $this->categoryRepository->all();
-        return CategoryResource::collection($categories);
+        return $this->categoryRepository->all();
     }
 
-    public function store(array $data): CategoryResource
+    public function store(array $data)
     {
-        $category = $this->categoryRepository->create($data);
-        return new CategoryResource($category);
+        return $this->categoryRepository->create($data);
     }
 
-    public function destroy($id): CategoryResource
+    public function destroy($id)
     {
-        $category = $this->categoryRepository->delete($id);
-        return new CategoryResource($category);
+        return $this->categoryRepository->delete($id);
     }
 }
