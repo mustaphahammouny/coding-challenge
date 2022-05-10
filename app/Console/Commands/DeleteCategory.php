@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\CategoryRepository;
+use App\Services\CategoryService;
 use Illuminate\Console\Command;
 
 class DeleteCategory extends Command
@@ -22,21 +22,21 @@ class DeleteCategory extends Command
     protected $description = 'Delete category';
 
     /**
-     * Category Repository.
+     * Category Service.
      *
-     * @var CategoryRepository
+     * @var CategoryService
      */
-    protected $categoryRepository;
+    protected $categoryService;
 
     /**
      * Create a new command instance.
      *
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryService $categoryService
      * @return void
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
 
         parent::__construct();
     }
@@ -48,7 +48,7 @@ class DeleteCategory extends Command
      */
     public function handle()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryService->index();
         $choices = [];
         foreach ($categories as $category) {
             $choices[$category->id] = $category->name;
@@ -57,7 +57,7 @@ class DeleteCategory extends Command
         $nameCategory = $this->choice('Choose category?', $choices);
         $id = array_search($nameCategory, $choices);
 
-        $this->categoryRepository->delete($id);
+        $this->categoryService->destroy($id);
 
         $this->info('Category deleted successfully');
     }

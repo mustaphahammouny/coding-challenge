@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\CategoryRepository;
-use App\Repositories\ProductRepository;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 use Illuminate\Console\Command;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
@@ -25,34 +25,34 @@ class CreateProduct extends Command
     protected $description = 'Create product';
 
     /**
-     * Category Repository.
+     * Category Service.
      *
-     * @var CategoryRepository
+     * @var CategoryService
      */
-    protected $categoryRepository;
+    protected $categoryService;
 
     /**
-     * Product Repository.
+     * Product Service.
      *
-     * @var ProductRepository
+     * @var ProductService
      */
-    protected $productRepository;
+    protected $productService;
 
     /**
      * Create a new command instance.
      *
-     * @param CategoryRepository $categoryRepository
-     * @param ProductRepository $productRepository
+     * @param CategoryService $categoryService
+     * @param ProductService $productService
      * @return void
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
-        ProductRepository $productRepository
+        CategoryService $categoryService,
+        ProductService $productService
     )
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryService = $categoryService;
 
-        $this->productRepository = $productRepository;
+        $this->productService = $productService;
 
         parent::__construct();
     }
@@ -64,7 +64,7 @@ class CreateProduct extends Command
      */
     public function handle()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryService->index();
         $choices = ['None'];
         foreach ($categories as $category) {
             $choices[$category->id] = $category->name;
@@ -77,22 +77,20 @@ class CreateProduct extends Command
         $names = $this->choice('Choose one or multiple categories?', $choices, 0, null, true);
 
         try {
-            $file = new File($path, true);
+            $data['image'] = new File($path, true);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
             return;
         }
-        $data['image'] = Storage::disk('public')->putFile('products', $file);
-
-        $product = $this->productRepository->create($data);
 
         if (!in_array('None', $names)) {
-            $ids = [];
+            $data['categories'] = [];
             foreach ($names as $name) {
-                array_push($ids, array_search($name, $choices));
+                array_push($data['categories'], array_search($name, $choices));
             }
-            $this->productRepository->attach($product->categories(), $ids);
         }
+
+        $this->productService->store($data);
 
         $this->info('Product created successfully');
     }

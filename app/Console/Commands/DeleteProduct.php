@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\ProductRepository;
+use App\Services\ProductService;
 use Illuminate\Console\Command;
 
 class DeleteProduct extends Command
@@ -22,21 +22,21 @@ class DeleteProduct extends Command
     protected $description = 'Delete product';
 
     /**
-     * Product Repository.
+     * Product Service.
      *
-     * @var ProductRepository
+     * @var ProductService
      */
-    protected $productRepository;
+    protected $productService;
 
     /**
      * Create a new command instance.
      *
-     * @param ProductRepository $productRepository
+     * @param ProductService $productService
      * @return void
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductService $productService)
     {
-        $this->productRepository = $productRepository;
+        $this->productService = $productService;
 
         parent::__construct();
     }
@@ -48,7 +48,7 @@ class DeleteProduct extends Command
      */
     public function handle()
     {
-        $products = $this->productRepository->all();
+        $products = $this->productService->index();
         $choices = [];
         foreach ($products as $product) {
             $choices[$product->id] = $product->name;
@@ -57,7 +57,7 @@ class DeleteProduct extends Command
         $nameProduct = $this->choice('Choose product?', $choices);
         $id = array_search($nameProduct, $choices);
 
-        $this->productRepository->delete($id);
+        $this->productService->destroy($id);
 
         $this->info('Product deleted successfully');
     }
