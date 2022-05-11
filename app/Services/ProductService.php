@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService
@@ -21,17 +24,17 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function index(array $data)
+    public function index(array $data): LengthAwarePaginator
     {
         return $this->productRepository->paginate($data);
     }
 
-    public function all()
+    public function all(): Collection
     {
         return $this->productRepository->all();
     }
 
-    public function store(array $data)
+    public function store(array $data): Model
     {
         $data['image'] = Storage::disk('public')->putFile('products', $data['image']);
         $product = $this->productRepository->create($data);
@@ -43,7 +46,7 @@ class ProductService
         return $product;
     }
 
-    public function destroy($id)
+    public function destroy($id): Model
     {
         return $this->productRepository->delete($id);
     }

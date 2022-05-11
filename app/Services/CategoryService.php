@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\CategoryRepository;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class CategoryService
 {
@@ -20,17 +22,17 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index()
+    public function index(): Collection
     {
         return $this->categoryRepository->all();
     }
 
-    public function store(array $data)
+    public function store(array $data): Model
     {
         return $this->categoryRepository->create($data);
     }
 
-    public function destroy($id)
+    public function destroy($id): Model
     {
         return $this->categoryRepository->delete($id);
     }

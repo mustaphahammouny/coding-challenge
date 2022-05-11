@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductRepository extends BaseRepository
@@ -17,7 +18,7 @@ class ProductRepository extends BaseRepository
         return Product::query();
     }
 
-    public function paginate($data)
+    public function paginate(array $data): LengthAwarePaginator
     {
         $query = $this->builder;
 
