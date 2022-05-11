@@ -3,22 +3,23 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductRepository extends BaseRepository
 {
     /**
-     * Specify model class name.
+     * Specify builder name.
      *
-     * @return string
+     * @return Builder
      */
-    public function model()
+    public function builder(): Builder
     {
-        return Product::class;
+        return Product::query();
     }
 
     public function paginate($data)
     {
-        $query = $this->model;
+        $query = $this->builder;
 
         if (isset($data['categories'])) {
             $query = $query->whereHas('categories', function ($query) use ($data) {

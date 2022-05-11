@@ -3,16 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 
 class CategoryRepository extends BaseRepository
 {
     /**
-     * Specify model class name.
+     * Specify builder name.
      *
-     * @return string
+     * @return Builder
      */
-    public function model()
+    public function builder(): Builder
     {
-        return Category::class;
+        return Category::query();
     }
 }

@@ -48,7 +48,7 @@ class DeleteProduct extends Command
      */
     public function handle()
     {
-        $products = $this->productService->index();
+        $products = $this->productService->all();
         $choices = [];
         foreach ($products as $product) {
             $choices[$product->id] = $product->name;

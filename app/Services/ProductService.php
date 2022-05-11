@@ -26,6 +26,11 @@ class ProductService
         return $this->productRepository->paginate($data);
     }
 
+    public function all()
+    {
+        return $this->productRepository->all();
+    }
+
     public function store(array $data)
     {
         $data['image'] = Storage::disk('public')->putFile('products', $data['image']);

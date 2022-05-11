@@ -2,32 +2,31 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
+use Illuminate\Database\Eloquent\Builder;
 
 class BaseRepository
 {
     /**
-     * @var Model
+     * @var Builder
      */
-    protected $model;
+    protected $builder;
 
     /**
      * BaseRepository constructor.
      */
     public function __construct()
     {
-        $this->model = App::make($this->model());
+        $this->builder = $this->builder();
     }
 
     public function all()
     {
-        return $this->model::all();
+        return $this->builder->get();
     }
 
     public function create($data)
     {
-        return $this->model::create($data);
+        return $this->builder->create($data);
     }
 
     public function attach($relation, $data)
@@ -37,7 +36,7 @@ class BaseRepository
 
     public function delete($id)
     {
-        $row = $this->model::findOrFail($id);
+        $row = $this->builder->findOrFail($id);
         $row->delete();
         return $row;
     }
