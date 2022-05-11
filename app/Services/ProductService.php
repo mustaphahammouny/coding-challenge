@@ -34,6 +34,7 @@ class ProductService
         if (count($categories) > 0) {
             $this->productRepository->attach($product->categories(), $categories);
         }
+
         return $product;
     }
 

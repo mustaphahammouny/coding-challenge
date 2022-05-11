@@ -35,6 +35,7 @@ class ProductController extends Controller
     {
         $data = $request->only(['sort', 'order', 'categories']);
         $products = $this->productService->index($data);
+
         return ProductResource::collection($products);
     }
 
@@ -48,6 +49,7 @@ class ProductController extends Controller
     {
         $data = $request->only(['name', 'description', 'price', 'image', 'categories']);
         $product = $this->productService->store($data);
+
         return new ProductResource($product);
     }
 
@@ -60,6 +62,7 @@ class ProductController extends Controller
     public function destroy(int $id): ProductResource
     {
         $product = $this->productService->destroy($id);
+
         return new ProductResource($product);
     }
 }

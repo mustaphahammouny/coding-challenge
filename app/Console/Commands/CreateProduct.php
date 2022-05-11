@@ -6,7 +6,6 @@ use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Console\Command;
 use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
 class CreateProduct extends Command
 {

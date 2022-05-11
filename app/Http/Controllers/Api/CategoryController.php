@@ -33,6 +33,7 @@ class CategoryController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $categories = $this->categoryService->index();
+
         return CategoryResource::collection($categories);
     }
 
@@ -46,6 +47,7 @@ class CategoryController extends Controller
     {
         $data = $request->only(['name', 'parent_category']);
         $category = $this->categoryService->store($data);
+
         return new CategoryResource($category);
     }
 
@@ -58,6 +60,7 @@ class CategoryController extends Controller
     public function destroy(int $id): CategoryResource
     {
         $category = $this->categoryService->destroy($id);
+
         return new CategoryResource($category);
     }
 }
