@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductResource;
 use App\Repositories\ProductRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductService
 {
@@ -16,38 +15,58 @@ class ProductService
     protected $productRepository;
 
     /**
-     * ProductService constructor.
-     * @param ProductRepository $productRepository
+     * @var FilesystemManager
      */
-    public function __construct(ProductRepository $productRepository)
+    protected $filesystemManager;
+
+    /**
+     * ProductService constructor.
+     *
+     * @param ProductRepository $productRepository
+     * @param FilesystemManager $filesystemManager
+     */
+    public function __construct(
+        ProductRepository $productRepository,
+        FilesystemManager $filesystemManager
+    )
     {
         $this->productRepository = $productRepository;
+
+        $this->filesystemManager = $filesystemManager;
     }
 
-    public function index(array $data): LengthAwarePaginator
+    public function index(array $data): AnonymousResourceCollection
     {
-        return $this->productRepository->paginate($data);
+        $products = $this->productRepository->paginate($data);
+
+        return ProductResource::collection($products);
     }
 
-    public function all(): Collection
+    public function all(): AnonymousResourceCollection
     {
-        return $this->productRepository->all();
+        $products = $this->productRepository->all();
+
+        return ProductResource::collection($products);
     }
 
-    public function store(array $data): Model
+    public function store(array $data): ProductResource
     {
-        $data['image'] = Storage::disk('public')->putFile('products', $data['image']);
+        $data['image'] = $this->filesystemManager->disk('public')->putFile('products', $data['image']);
+
         $product = $this->productRepository->create($data);
+
         $categories = $data['categories'] ?? [];
         if (count($categories) > 0) {
             $this->productRepository->attach($product->categories(), $categories);
         }
 
-        return $product;
+        return new ProductResource($product);
     }
 
-    public function destroy($id): Model
+    public function destroy(int $id): ProductResource
     {
-        return $this->productRepository->delete($id);
+        $product = $this->productRepository->delete($id);
+
+        return new ProductResource($product);
     }
 }

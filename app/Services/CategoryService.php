@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Http\Resources\CategoryResource;
 use App\Repositories\CategoryRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
 {
@@ -22,18 +22,24 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index(): Collection
+    public function index(): AnonymousResourceCollection
     {
-        return $this->categoryRepository->all();
+        $categories = $this->categoryRepository->all();
+
+        return CategoryResource::collection($categories);
     }
 
-    public function store(array $data): Model
+    public function store(array $data): CategoryResource
     {
-        return $this->categoryRepository->create($data);
+        $category = $this->categoryRepository->create($data);
+
+        return new CategoryResource($category);
     }
 
-    public function destroy($id): Model
+    public function destroy(int $id): CategoryResource
     {
-        return $this->categoryRepository->delete($id);
+        $category = $this->categoryRepository->delete($id);
+
+        return new CategoryResource($category);
     }
 }

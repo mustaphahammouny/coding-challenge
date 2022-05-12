@@ -41,6 +41,7 @@ class BaseRepository
     {
         $row = $this->builder->findOrFail($id);
         $row->delete();
+
         return $row;
     }
 }

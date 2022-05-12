@@ -32,9 +32,7 @@ class CategoryController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $categories = $this->categoryService->index();
-
-        return CategoryResource::collection($categories);
+        return $this->categoryService->index();
     }
 
     /**
@@ -46,9 +44,8 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): CategoryResource
     {
         $data = $request->only(['name', 'parent_category']);
-        $category = $this->categoryService->store($data);
 
-        return new CategoryResource($category);
+        return $this->categoryService->store($data);
     }
 
     /**
@@ -59,8 +56,6 @@ class CategoryController extends Controller
      */
     public function destroy(int $id): CategoryResource
     {
-        $category = $this->categoryService->destroy($id);
-
-        return new CategoryResource($category);
+        return $this->categoryService->destroy($id);
     }
 }

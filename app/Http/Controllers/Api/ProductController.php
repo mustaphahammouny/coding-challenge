@@ -29,14 +29,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
     {
         $data = $request->only(['sort', 'order', 'categories']);
-        $products = $this->productService->index($data);
 
-        return ProductResource::collection($products);
+        return $this->productService->index($data);
     }
 
     /**
@@ -48,9 +48,8 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): ProductResource
     {
         $data = $request->only(['name', 'description', 'price', 'image', 'categories']);
-        $product = $this->productService->store($data);
 
-        return new ProductResource($product);
+        return $this->productService->store($data);
     }
 
     /**
@@ -61,8 +60,6 @@ class ProductController extends Controller
      */
     public function destroy(int $id): ProductResource
     {
-        $product = $this->productService->destroy($id);
-
-        return new ProductResource($product);
+        return $this->productService->destroy($id);
     }
 }
