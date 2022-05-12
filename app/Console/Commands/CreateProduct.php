@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Constants\Rules;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Console\Command;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\Validator;
 
 class CreateProduct extends Command
 {
@@ -72,11 +74,21 @@ class CreateProduct extends Command
         $data['name'] = $this->ask('Enter name?');
         $data['description'] = $this->ask('Enter description?');
         $data['price'] = $this->ask('Enter price?');
-        $path = $this->ask('Enter image path?');
+        $data['image'] = $this->ask('Enter image path?');
         $names = $this->choice('Choose one or multiple categories?', $choices, 0, null, true);
 
+        $rules = Rules::STORE_PRODUCT_RULES;
+        $rules['image'] = 'required|string';
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                $this->error($error);
+            }
+            return;
+        }
+
         try {
-            $data['image'] = new File($path, true);
+            $data['image'] = new File($data['image'], true);
         } catch (\Exception $e) {
             $this->error($e->getMessage());
             return;

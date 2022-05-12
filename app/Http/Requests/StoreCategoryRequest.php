@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\Rules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCategoryRequest extends FormRequest
@@ -23,9 +24,6 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|max:255',
-            'parent_category' => 'nullable|exists:categories,id',
-        ];
+        return Rules::STORE_CATEGORY_RULES;
     }
 }
