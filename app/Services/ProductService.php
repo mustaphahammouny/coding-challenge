@@ -3,14 +3,14 @@
 namespace App\Services;
 
 use App\Http\Resources\ProductResource;
-use App\Repositories\ProductRepository;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductService
 {
     /**
-     * @var ProductRepository
+     * @var ProductRepositoryInterface
      */
     protected $productRepository;
 
@@ -22,11 +22,11 @@ class ProductService
     /**
      * ProductService constructor.
      *
-     * @param ProductRepository $productRepository
+     * @param ProductRepositoryInterface $productRepository
      * @param FilesystemManager $filesystemManager
      */
     public function __construct(
-        ProductRepository $productRepository,
+        ProductRepositoryInterface $productRepository,
         FilesystemManager $filesystemManager
     )
     {
@@ -52,12 +52,13 @@ class ProductService
     public function store(array $data): ProductResource
     {
         $data['image'] = $this->filesystemManager->disk('public')->putFile('products', $data['image']);
+        $categories = $data['categories'] ?? [];
+        unset($data['categories']);
 
         $product = $this->productRepository->create($data);
 
-        $categories = $data['categories'] ?? [];
         if (count($categories) > 0) {
-            $this->productRepository->attach($product->categories(), $categories);
+            $this->productRepository->attach($product->id, $categories);
         }
 
         return new ProductResource($product);

@@ -6,9 +6,8 @@ use App\Repositories\Interfaces\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
-class BaseRepositoryRepository implements BaseRepositoryInterface
+class BaseRepository implements BaseRepositoryInterface
 {
     /**
      * @var Builder
@@ -33,9 +32,9 @@ class BaseRepositoryRepository implements BaseRepositoryInterface
         return $this->builder->create($data);
     }
 
-    public function attach(Relation $relation, array $data): void
+    public function find(int $id): Model
     {
-        $relation->attach($data);
+        return $this->builder->find($id);
     }
 
     public function delete(int $id): Model

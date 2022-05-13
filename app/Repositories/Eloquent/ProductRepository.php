@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
-class ProductRepositoryRepository extends BaseRepositoryRepository implements ProductRepositoryInterface
+class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
     /**
      * Specify builder name.
@@ -34,5 +34,12 @@ class ProductRepositoryRepository extends BaseRepositoryRepository implements Pr
         }
 
         return $query->paginate(9);
+    }
+
+    public function attach(int $id, array $data): void
+    {
+        $product = $this->builder->find($id);
+
+        $product->categories()->attach($data);
     }
 }

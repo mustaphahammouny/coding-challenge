@@ -3,21 +3,21 @@
 namespace App\Services;
 
 use App\Http\Resources\CategoryResource;
-use App\Repositories\CategoryRepository;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
 {
     /**
-     * @var CategoryRepository
+     * @var CategoryRepositoryInterface
      */
     protected $categoryRepository;
 
     /**
      * CategoryService constructor.
-     * @param CategoryRepository $categoryRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-class CategoryRepositoryRepository extends BaseRepositoryRepository implements CategoryRepositoryInterface
+class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     /**
      * Specify builder name.
