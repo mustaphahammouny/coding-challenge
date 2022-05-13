@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquent;
 
 use App\Models\Category;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-class CategoryRepository extends BaseRepository
+class CategoryRepositoryRepository extends BaseRepositoryRepository implements CategoryRepositoryInterface
 {
     /**
      * Specify builder name.

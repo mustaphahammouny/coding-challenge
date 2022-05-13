@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Eloquent;
 
 use App\Models\Product;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
-class ProductRepository extends BaseRepository
+class ProductRepositoryRepository extends BaseRepositoryRepository implements ProductRepositoryInterface
 {
     /**
      * Specify builder name.
