@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -42,10 +41,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreProductRequest  $request
+     * @param  Request  $request
      * @return ProductResource
      */
-    public function store(StoreProductRequest $request): ProductResource
+    public function store(Request $request): ProductResource
     {
         $data = $request->only(['name', 'description', 'price', 'image', 'categories']);
 

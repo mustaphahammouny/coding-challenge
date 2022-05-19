@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\StoreCategoryException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryController extends Controller
@@ -38,10 +40,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreCategoryRequest  $request
-     * @return CategoryResource
+     * @param  Request  $request
+     * @return CategoryResource|JsonResponse
      */
-    public function store(StoreCategoryRequest $request): CategoryResource
+    public function store(Request $request): CategoryResource
     {
         $data = $request->only(['name', 'parent_category']);
 

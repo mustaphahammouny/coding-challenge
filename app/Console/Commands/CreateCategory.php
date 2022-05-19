@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Constants\Rules;
 use App\Services\CategoryService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class CreateCategory extends Command
 {
@@ -62,15 +61,15 @@ class CreateCategory extends Command
             $data['parent_category'] = array_search($nameCategory, $choices);
         }
 
-        $validator = Validator::make($data,Rules::STORE_CATEGORY_RULES);
-        if ($validator->fails()) {
-            foreach ($validator->errors()->all() as $error) {
-                $this->error($error);
+        try {
+            $this->categoryService->store($data);
+        } catch (ValidationException $exception) {
+            $this->error($exception->getMessage());
+            foreach ($exception->errors() as $error) {
+                $this->error($error[0]);
             }
             return;
         }
-
-        $this->categoryService->store($data);
 
         $this->info('Category created successfully');
     }
