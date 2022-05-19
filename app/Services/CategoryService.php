@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Validators\StoreCategoryValidator;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryService
 {
@@ -35,13 +35,13 @@ class CategoryService
     }
 
     /**
-     * @return AnonymousResourceCollection
+     * @return CategoryCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): CategoryCollection
     {
         $categories = $this->categoryRepository->all();
 
-        return CategoryResource::collection($categories);
+        return new CategoryCollection($categories);
     }
 
     /**

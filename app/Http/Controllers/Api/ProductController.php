@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
@@ -29,9 +29,9 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return AnonymousResourceCollection
+     * @return ProductCollection
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): ProductCollection
     {
         $data = $request->only(['sort', 'order', 'categories']);
 

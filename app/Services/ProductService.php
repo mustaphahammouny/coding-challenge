@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Validators\StoreProductValidator;
 use Illuminate\Filesystem\FilesystemManager;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductService
 {
@@ -45,21 +45,21 @@ class ProductService
         $this->storeProductValidator = $storeProductValidator;
     }
 
-    public function index(array $data): AnonymousResourceCollection
+    public function index(array $data): ProductCollection
     {
         $products = $this->productRepository->paginate($data);
 
-        return ProductResource::collection($products);
+        return new ProductCollection($products);
     }
 
     /**
-     * @return AnonymousResourceCollection
+     * @return ProductCollection
      */
-    public function all(): AnonymousResourceCollection
+    public function all(): ProductCollection
     {
         $products = $this->productRepository->all();
 
-        return ProductResource::collection($products);
+        return new ProductCollection($products);
     }
 
     /**

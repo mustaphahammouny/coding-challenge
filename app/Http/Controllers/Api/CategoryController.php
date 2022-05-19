@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\StoreCategoryException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CategoryController extends Controller
 {
@@ -30,9 +29,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return AnonymousResourceCollection
+     * @return CategoryCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): CategoryCollection
     {
         return $this->categoryService->index();
     }
